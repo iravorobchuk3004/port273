@@ -76,9 +76,11 @@ body.menu-open .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 30; p
 /* the intro text hangs from the left edge of the O */
 .hero-text { left: calc(382 * var(--u)); top: calc(396 * var(--u)); width: max(380px, calc(540 * var(--u))); font-size: max(13px, calc(16 * var(--u))); line-height: 1.38; }
 /* "500+" carries its caption as a superscript, the same way PORT carries °273 */
-.hero-stat { left: calc(36 * var(--u)); top: calc(530 * var(--u)); width: calc(800 * var(--u)); margin: 0; display: flex; align-items: flex-start; gap: calc(14 * var(--u)); }
+/* caption sits above the number, both starting from the left edge of the 5 */
+.hero-stat { left: calc(36 * var(--u)); top: calc(492 * var(--u)); width: calc(800 * var(--u)); margin: 0; display: flex; flex-direction: column-reverse; align-items: flex-start; gap: calc(12 * var(--u)); }
 .hero-stat b { display: block; font-family: var(--display); font-weight: 800; color: var(--red); font-size: calc(128 * var(--u)); line-height: .84; transform: translate(var(--mx, 0), var(--my, 0)); will-change: transform; }
-.hero-stat span { position: relative; font-size: max(13px, calc(16 * var(--u))); line-height: 1.3; text-transform: uppercase; letter-spacing: .04em; padding-top: calc(14 * var(--u)); }
+.hero-stat span { position: relative; margin-left: calc(4 * var(--u)); font-size: max(13px, calc(16 * var(--u))); line-height: 1.3; text-transform: uppercase; letter-spacing: .04em; padding-top: calc(14 * var(--u)); }
+.hero-stat span br { display: none; }
 .hero-stat span::before { content: ""; position: absolute; top: 0; left: 0; width: calc(32 * var(--u)); height: 2px; background: var(--red); }
 
 /* hero button: dark fill rises from below, arrow slides in, the button leans toward the cursor */
@@ -353,7 +355,7 @@ body.menu-open .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 30; p
   .hero-port { position: static; display: block; font-size: calc((100vw - 40px) / 4.85); letter-spacing: 0; line-height: .85; }
   .hero-num { position: absolute; top: 0; right: 0; font-size: calc((100vw - 40px) / 15); letter-spacing: .06em; margin-right: 0; }
   .hero-text { width: auto; font-size: 15px; margin-top: 28px; }
-  .hero-stat { width: auto; display: flex; align-items: flex-start; gap: 12px; margin-top: 24px; }
+  .hero-stat { width: auto; display: flex; flex-direction: column-reverse; align-items: flex-start; gap: 8px; margin-top: 24px; }
   .hero-stat b { font-size: 56px; }
   .hero-stat span { font-size: 12px; padding-top: 10px; }
   .hero-stat span::before { width: 24px; }
