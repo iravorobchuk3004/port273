@@ -52,7 +52,7 @@ const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
 if (stat && !calm) {
   const to = Number(stat.dataset.count);
   stat.style.minWidth = stat.offsetWidth + 'px'; // keep the caption still while digits change
-  const t0 = performance.now(), dur = 1600;
+  const t0 = performance.now(), dur = 3200;
   const tick = now => {
     const p = Math.min(1, (now - t0) / dur);
     stat.textContent = Math.round(to * (1 - Math.pow(1 - p, 4))) + '+';
@@ -65,7 +65,7 @@ const hero = document.querySelector('.hero');
 if (hero && stat && finePointer && !calm) {
   let tx = 0, ty = 0, x = 0, y = 0, running = false;
   const follow = () => {
-    x += (tx - x) * 0.08; y += (ty - y) * 0.08;
+    x += (tx - x) * 0.04; y += (ty - y) * 0.04;
     stat.style.setProperty('--mx', x.toFixed(1) + 'px');
     stat.style.setProperty('--my', y.toFixed(1) + 'px');
     running = Math.abs(tx - x) > 0.1 || Math.abs(ty - y) > 0.1;
