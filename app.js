@@ -43,6 +43,55 @@ if (menuBtn && menu) {
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !menu.hidden) setMenu(false); });
 }
 
+// Hero motion: 500+ counts up and drifts after the cursor, the button leans toward it
+const stat = document.querySelector('.hero-stat b');
+const heroBtn = document.querySelector('.hero-btn');
+const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+if (stat && !calm) {
+  const to = Number(stat.dataset.count);
+  stat.style.minWidth = stat.offsetWidth + 'px'; // keep the caption still while digits change
+  const t0 = performance.now(), dur = 1600;
+  const tick = now => {
+    const p = Math.min(1, (now - t0) / dur);
+    stat.textContent = Math.round(to * (1 - Math.pow(1 - p, 4))) + '+';
+    if (p < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+const hero = document.querySelector('.hero');
+if (hero && stat && finePointer && !calm) {
+  let tx = 0, ty = 0, x = 0, y = 0, running = false;
+  const follow = () => {
+    x += (tx - x) * 0.08; y += (ty - y) * 0.08;
+    stat.style.setProperty('--mx', x.toFixed(1) + 'px');
+    stat.style.setProperty('--my', y.toFixed(1) + 'px');
+    running = Math.abs(tx - x) > 0.1 || Math.abs(ty - y) > 0.1;
+    if (running) requestAnimationFrame(follow);
+  };
+  const kick = () => { if (!running) { running = true; requestAnimationFrame(follow); } };
+  hero.addEventListener('mousemove', e => {
+    const r = stat.getBoundingClientRect();
+    const dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+    // pulled toward the cursor, but never more than ~60px away from its place
+    const d = Math.hypot(dx, dy) || 1, pull = Math.min(60, d * 0.12);
+    tx = dx / d * pull; ty = dy / d * pull * 0.6;
+    kick();
+  });
+  hero.addEventListener('mouseleave', () => { tx = 0; ty = 0; kick(); });
+}
+
+if (heroBtn && finePointer && !calm) {
+  heroBtn.addEventListener('mousemove', e => {
+    const r = heroBtn.getBoundingClientRect();
+    heroBtn.style.setProperty('--bx', ((e.clientX - r.left) / r.width - 0.5) * 14 + 'px');
+    heroBtn.style.setProperty('--by', ((e.clientY - r.top) / r.height - 0.5) * 10 + 'px');
+  });
+  heroBtn.addEventListener('mouseleave', () => { heroBtn.style.setProperty('--bx', '0px'); heroBtn.style.setProperty('--by', '0px'); });
+}
+
 // Home form hands its answers to the booking flow
 const planForm = document.getElementById('plan-form');
 if (planForm) {
