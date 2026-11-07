@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spaces — PORT°273</title>
+  <link rel="icon" href="img/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="page-head">
+    <nav class="nav wrap" aria-label="Main">
+      <a href="index.html" class="logo" aria-label="PORT-273 home"><svg viewBox="0 0 46 28" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M0 0h37v8h9v6.5c0 3.6-2.9 6-6.5 6H11V28H0zM11 9v4h24V9z"/></svg></a>
+      <ul class="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="spaces.html" aria-current="page">Spaces</a></li>
+        <li><a href="index.html#events">Events</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="book.html" class="btn nav-cta">Book a space</a>
+      <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+    </nav>
+  </header>
+  <div class="menu" id="menu" hidden>
+    <ul><li><a href="index.html#about">About</a></li><li><a href="spaces.html">Spaces</a></li><li><a href="index.html#events">Events</a></li><li><a href="#contact">Contact</a></li></ul>
+    <a href="book.html" class="btn">Book a space</a>
+  </div>
+
+  <main class="wrap">
+    <p class="crumbs"><a href="index.html">Home</a><span>/</span><span>Spaces</span></p>
+    <h1 class="page-title">Our spaces</h1>
+    <p class="page-lead">Four rooms under one roof, from a 60 m² terrace to a 150-seat hall. Your first booking is on us.</p>
+
+    <div class="filters" role="radiogroup" aria-label="Filter by event type">
+      <label class="chip"><input type="radio" name="f" value="" checked><span>All spaces</span></label>
+    </div>
+
+    <div class="space-list" id="space-list"></div>
+  </main>
+
+  <footer class="footer" id="contact"></footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script>
+    const filters = document.querySelector('.filters');
+    filters.insertAdjacentHTML('beforeend', EVENT_TYPES.map(t =>
+      `<label class="chip"><input type="radio" name="f" value="${t}"><span>${t}</span></label>`).join(''));
+
+    const list = document.getElementById('space-list');
+    list.innerHTML = SPACES.map(s => `
+      <article class="space-item" data-good="${s.goodFor.join('|')}">
+        <a href="space.html?id=${s.id}" class="space-img"><img src="${s.img}" alt="${s.name}" loading="lazy"></a>
+        <div class="si-body">
+          <h2>${s.name}</h2>
+          <p class="detail-text">${s.short}</p>
+          <dl class="specs">
+            <div><dt>Area</dt><dd>${s.area} m²</dd></div>
+            <div><dt>Guests</dt><dd>up to ${s.guests}</dd></div>
+            <div><dt>Price</dt><dd>${uah(s.price)} / h</dd></div>
+          </dl>
+          <p class="tags">${s.goodFor.map(g => `<span>${g}</span>`).join('')}</p>
+          <div class="row-btns">
+            <a class="btn" href="book.html?space=${s.id}">Book this space</a>
+            <a class="btn btn-ghost" href="space.html?id=${s.id}">Details</a>
+          </div>
+        </div>
+      </article>`).join('');
+
+    filters.addEventListener('change', e => {
+      const v = e.target.value;
+      list.querySelectorAll('.space-item').forEach(el => {
+        el.hidden = v && !el.dataset.good.split('|').includes(v);
+      });
+    });
+  </script>
+</body>
+</html>

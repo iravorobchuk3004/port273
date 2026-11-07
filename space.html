@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Space — PORT°273</title>
+  <link rel="icon" href="img/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="page-head">
+    <nav class="nav wrap" aria-label="Main">
+      <a href="index.html" class="logo" aria-label="PORT-273 home"><svg viewBox="0 0 46 28" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M0 0h37v8h9v6.5c0 3.6-2.9 6-6.5 6H11V28H0zM11 9v4h24V9z"/></svg></a>
+      <ul class="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="spaces.html" aria-current="page">Spaces</a></li>
+        <li><a href="index.html#events">Events</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="book.html" class="btn nav-cta">Book a space</a>
+      <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+    </nav>
+  </header>
+  <div class="menu" id="menu" hidden>
+    <ul><li><a href="index.html#about">About</a></li><li><a href="spaces.html">Spaces</a></li><li><a href="index.html#events">Events</a></li><li><a href="#contact">Contact</a></li></ul>
+    <a href="book.html" class="btn">Book a space</a>
+  </div>
+
+  <main class="wrap" id="space"></main>
+
+  <footer class="footer" id="contact"></footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script>
+    const s = spaceById(new URLSearchParams(location.search).get('id')) || SPACES[0];
+    document.title = `${s.name} — PORT°273`;
+    document.getElementById('space').innerHTML = `
+      <p class="crumbs"><a href="index.html">Home</a><span>/</span><a href="spaces.html">Spaces</a><span>/</span><span>${s.name}</span></p>
+      <h1 class="page-title">${s.name}</h1>
+      <div class="detail">
+        <div>
+          <img class="detail-img" src="${s.img}" alt="${s.name} at PORT-273">
+          <h2>About the space</h2>
+          <p class="detail-text">${s.about}</p>
+          <h2>What’s included</h2>
+          <ul class="feature-list">${s.features.map(f => `<li>${f}</li>`).join('')}</ul>
+          <h2>Other spaces</h2>
+          <div class="others">${SPACES.filter(o => o !== s).map(o => `
+            <a class="space-card" href="space.html?id=${o.id}">
+              <span class="space-img"><img src="${o.img}" alt="${o.name}" loading="lazy"></span>
+              <span class="space-row"><b>${o.name}</b><span>${o.area} m²</span></span>
+            </a>`).join('')}
+          </div>
+        </div>
+        <aside class="book-card" aria-label="Book ${s.name}">
+          <p class="price">${uah(s.price)} <small>/ hour</small></p>
+          <dl class="specs">
+            <div><dt>Area</dt><dd>${s.area} m²</dd></div>
+            <div><dt>Guests</dt><dd>up to ${s.guests}</dd></div>
+          </dl>
+          <p class="tags">${s.goodFor.map(g => `<span>${g}</span>`).join('')}</p>
+          <a class="btn btn-block" href="book.html?space=${s.id}">Book this space</a>
+          <p class="note"><b>Your first booking is on us.</b> Pick a date and time, we confirm within 24 hours. No prepayment.</p>
+        </aside>
+      </div>`;
+  </script>
+</body>
+</html>

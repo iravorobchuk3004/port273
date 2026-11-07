@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book a space — PORT°273</title>
+  <link rel="icon" href="img/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="page-head">
+    <nav class="nav wrap" aria-label="Main">
+      <a href="index.html" class="logo" aria-label="PORT-273 home"><svg viewBox="0 0 46 28" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M0 0h37v8h9v6.5c0 3.6-2.9 6-6.5 6H11V28H0zM11 9v4h24V9z"/></svg></a>
+      <ul class="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="spaces.html">Spaces</a></li>
+        <li><a href="index.html#events">Events</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+    </nav>
+  </header>
+  <div class="menu" id="menu" hidden>
+    <ul><li><a href="index.html#about">About</a></li><li><a href="spaces.html">Spaces</a></li><li><a href="index.html#events">Events</a></li><li><a href="#contact">Contact</a></li></ul>
+    <a href="book.html" class="btn">Book a space</a>
+  </div>
+
+  <main class="wrap">
+    <div id="flow-wrap">
+      <p class="crumbs"><a href="index.html">Home</a><span>/</span><span>Book a space</span></p>
+      <h1 class="page-title">Book a space</h1>
+
+      <div class="flow">
+        <div>
+          <ol class="steps" aria-label="Booking steps">
+            <li data-step="1"><b>01</b>Space</li>
+            <li data-step="2"><b>02</b>Date &amp; time</li>
+            <li data-step="3"><b>03</b>Your details</li>
+            <li data-step="4"><b>04</b>Review</li>
+          </ol>
+
+          <section class="step" data-step="1" aria-labelledby="t1">
+            <h2 class="step-title" id="t1">Choose a space</h2>
+            <div class="pick-spaces" role="radiogroup" aria-label="Space" id="pick-spaces"></div>
+            <div class="step-actions">
+              <a class="back" href="spaces.html">← All spaces</a>
+              <button class="btn" data-next>Continue</button>
+            </div>
+          </section>
+
+          <section class="step" data-step="2" aria-labelledby="t2" hidden>
+            <h2 class="step-title" id="t2">Pick a date &amp; time</h2>
+            <div class="dt-grid">
+              <div>
+                <span class="label">Date</span>
+                <div class="cal" id="cal"></div>
+              </div>
+              <div>
+                <span class="label">Duration</span>
+                <div class="filters" id="durations" role="radiogroup" aria-label="Duration" style="margin:0"></div>
+                <span class="label">Start time</span>
+                <div class="filters times" id="starts" role="radiogroup" aria-label="Start time" style="margin:0"></div>
+                <p class="hint" id="time-hint" style="margin-top:12px"></p>
+              </div>
+            </div>
+            <div class="step-actions">
+              <button class="back" data-back>← Back</button>
+              <button class="btn" data-next>Continue</button>
+            </div>
+          </section>
+
+          <section class="step" data-step="3" aria-labelledby="t3" hidden>
+            <h2 class="step-title" id="t3">Tell us about your event</h2>
+            <form class="form-grid" id="details" novalidate>
+              <div>
+                <span class="label">Event type</span>
+                <div class="filters" id="types" role="radiogroup" aria-label="Event type" style="margin:0"></div>
+              </div>
+              <div class="grid-2">
+                <label class="field"><span>Guests</span><input name="guests" type="number" min="1" inputmode="numeric" placeholder="e.g. 40" required><em class="err" hidden></em></label>
+                <label class="field"><span>Full name</span><input name="name" autocomplete="name" placeholder="Name Surname" required><em class="err" hidden></em></label>
+              </div>
+              <div class="grid-2">
+                <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" placeholder="you@studio.com" required><em class="err" hidden></em></label>
+                <label class="field"><span>Phone</span><input name="phone" type="tel" autocomplete="tel" placeholder="+380" required><em class="err" hidden></em></label>
+              </div>
+              <label class="field"><span>Anything we should know? (optional)</span><textarea name="note" placeholder="Setup, equipment, catering…"></textarea></label>
+            </form>
+            <div class="step-actions">
+              <button class="back" data-back>← Back</button>
+              <button class="btn" data-next>Review booking</button>
+            </div>
+          </section>
+
+          <section class="step" data-step="4" aria-labelledby="t4" hidden>
+            <h2 class="step-title" id="t4">Review &amp; confirm</h2>
+            <dl class="review" id="review"></dl>
+            <label class="agree"><input type="checkbox" id="agree"> I agree to the house rules: leave the space as you found it, no open fire, quiet after 22:00.</label>
+            <div class="step-actions">
+              <button class="back" data-back>← Back</button>
+              <button class="btn" id="confirm" disabled>Confirm booking</button>
+            </div>
+          </section>
+        </div>
+
+        <aside class="summary" aria-label="Booking summary">
+          <img id="sum-img" src="img/s1.jpg" alt="">
+          <div class="summary-body" id="sum-body"></div>
+        </aside>
+      </div>
+    </div>
+
+    <section class="success" id="success" hidden tabindex="-1">
+      <span class="success-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+      <h1 class="page-title">Request<br>sent</h1>
+      <p class="detail-text" id="success-text"></p>
+      <dl class="review" id="success-review"></dl>
+      <div class="success-actions">
+        <a class="btn" id="ics" download="port273-booking.ics">Add to calendar</a>
+        <a class="btn btn-ghost" href="index.html">Back to home</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="contact"></footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script src="book.js"></script>
+</body>
+</html>
