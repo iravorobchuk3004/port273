@@ -59,7 +59,11 @@ body.menu-open { overflow: hidden; }
 body.menu-open .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 30; padding: 0 20px; color: var(--white); }
 
 /* ---------- home: hero (positions follow the 1440 frame) ---------- */
-.hero { background: url(img/hero.jpg) center / cover no-repeat #1a1a1a; color: var(--white); }
+/* soft shade in the bottom corners keeps the P mark and claim readable over the bright windows */
+.hero { color: var(--white); background:
+  radial-gradient(ellipse 45% 55% at 100% 100%, rgba(0,0,0,.6), transparent),
+  radial-gradient(ellipse 45% 50% at 0% 100%, rgba(0,0,0,.35), transparent),
+  url(img/hero.jpg) center / cover no-repeat #1a1a1a; }
 .hero-inner { position: relative; max-width: 1440px; height: calc(860 * var(--u)); margin: 0 auto; }
 .hero-inner > * { position: absolute; }
 .nav-hero { left: calc(40 * var(--u)); right: calc(40 * var(--u)); top: 0; height: calc(108 * var(--u)); }
@@ -67,13 +71,15 @@ body.menu-open .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 30; p
 /* Figma's wordmark is a touch wider than Syne's default spacing */
 .hero-port { position: absolute; left: calc(-12 * var(--u)); top: calc(68 * var(--u)); font-size: calc(266 * var(--u)); letter-spacing: .06em; }
 .hero-num { position: absolute; right: calc(5 * var(--u)); top: calc(26 * var(--u)); font-size: calc(73 * var(--u)); letter-spacing: .11em; margin-right: -.11em; line-height: 1; }
-.hero-text { left: calc(154 * var(--u)); top: calc(390 * var(--u)); width: calc(610 * var(--u)); font-size: calc(16 * var(--u)); line-height: 1.38; }
-.hero-stat { left: calc(45 * var(--u)); top: calc(477 * var(--u)); width: calc(500 * var(--u)); margin: 0; }
-.hero-stat b { display: block; font-family: var(--display); font-weight: 800; color: var(--red); font-size: calc(128 * var(--u)); line-height: 1; }
-.hero-stat span { position: absolute; left: calc(224 * var(--u)); top: calc(106 * var(--u)); font-size: calc(16 * var(--u)); white-space: nowrap; }
-.hero-mark { left: calc(958 * var(--u)); top: calc(451 * var(--u)); width: calc(95 * var(--u)); height: calc(74 * var(--u)); color: #F2EEEC; }
-.hero-btn { left: calc(39 * var(--u)); top: calc(667 * var(--u)); width: calc(325 * var(--u)); height: calc(73 * var(--u)); font-size: calc(16 * var(--u)); }
-.hero-claim { right: calc(43 * var(--u)); top: calc(634 * var(--u)); text-align: right; font-size: calc(32 * var(--u)); line-height: 1.18; text-transform: uppercase; }
+/* Two columns on the 40px margins. Left: text → 500+ → button. Right: P mark above the claim
+   (same pairing as in "Plan your event"). Button and claim share the bottom line at 740. */
+.hero-text { left: calc(40 * var(--u)); top: calc(396 * var(--u)); width: max(380px, calc(540 * var(--u))); font-size: max(13px, calc(16 * var(--u))); line-height: 1.38; }
+.hero-stat { left: calc(36 * var(--u)); top: calc(530 * var(--u)); width: calc(800 * var(--u)); margin: 0; display: flex; align-items: flex-end; gap: calc(20 * var(--u)); }
+.hero-stat b { display: block; font-family: var(--display); font-weight: 800; color: var(--red); font-size: calc(128 * var(--u)); line-height: .84; }
+.hero-stat span { font-size: max(13px, calc(16 * var(--u))); line-height: 1.3; white-space: nowrap; padding-bottom: calc(6 * var(--u)); }
+.hero-mark { right: calc(40 * var(--u)); top: calc(560 * var(--u)); width: calc(95 * var(--u)); height: calc(58 * var(--u)); color: #F2EEEC; }
+.hero-btn { left: calc(40 * var(--u)); top: calc(667 * var(--u)); width: calc(325 * var(--u)); height: calc(73 * var(--u)); font-size: max(13px, calc(16 * var(--u))); }
+.hero-claim { right: calc(40 * var(--u)); bottom: calc(120 * var(--u)); text-align: right; font-size: calc(32 * var(--u)); line-height: 1.18; text-transform: uppercase; }
 .hero-claim em, .plan-claim em { font-style: normal; color: var(--red); }
 
 /* ---------- home: about ---------- */
