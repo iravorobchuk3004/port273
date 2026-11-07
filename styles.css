@@ -293,7 +293,8 @@ body.menu-open .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 30; p
 .total { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid var(--black); padding-top: 16px; font-size: 18px; font-weight: 700; text-transform: uppercase; }
 .total b { font-size: 32px; }
 
-.success { padding: 80px 0 140px; max-width: 760px; }
+.success { padding: 80px 0 140px; }
+.success .detail-text { max-width: 760px; }
 .success[hidden] { display: none; }
 .success-mark { width: 72px; height: 72px; background: var(--red); display: grid; place-items: center; margin-bottom: 32px; }
 .success-mark svg { width: 36px; height: 36px; fill: none; stroke: var(--white); stroke-width: 2.6; }
