@@ -297,7 +297,7 @@ body.menu-open .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 30; p
 .success .detail-text { max-width: 760px; }
 .success[hidden] { display: none; }
 /* check mark sits on the "Request" line, as tall as the capitals */
-.title-row { display: flex; align-items: center; gap: .2em; }
+.title-row { display: flex; align-items: center; justify-content: space-between; gap: .2em; }
 .success-mark { flex: none; width: .7em; height: .7em; margin-top: -.06em; background: var(--red); display: grid; place-items: center; }
 .success-mark svg { width: 58%; height: 58%; fill: none; stroke: var(--white); stroke-width: 2.6; }
 .success .page-title { margin: 0 0 24px; }
