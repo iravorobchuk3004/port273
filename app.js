@@ -28,6 +28,11 @@ document.querySelectorAll('[data-spaces]').forEach(grid => {
     </a>`).join('');
 });
 
+// Header turns compact and solid once the page is scrolled
+const onScroll = () => document.body.classList.toggle('scrolled', scrollY > 24);
+addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
 // Mobile menu
 const menuBtn = document.querySelector('.menu-btn');
 const menu = document.getElementById('menu');

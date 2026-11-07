@@ -56,7 +56,13 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .menu ul { display: grid; gap: 12px; }
 .menu li a { font-family: var(--display); font-weight: 800; font-size: min(40px, 10vw); text-transform: uppercase; }
 body.menu-open { overflow: hidden; }
-body.menu-open .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 30; padding: 0 20px; color: var(--white); }
+body.menu-open .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 30; padding: 0 20px; color: var(--white); background: transparent !important; box-shadow: none !important; }
+
+/* header stays on screen; after the first scroll it turns into a compact white bar */
+.nav { transition: height .3s, background-color .3s, color .3s, box-shadow .3s; }
+.page-head { position: sticky; top: 0; z-index: 15; background: var(--white); }
+body.scrolled .page-head .nav { height: 72px; }
+section[id], footer[id] { scroll-margin-top: 80px; }
 
 /* ---------- home: hero (positions follow the 1440 frame) ---------- */
 /* soft shade in the bottom corners keeps the P mark and claim readable over the bright windows */
@@ -66,7 +72,10 @@ body.menu-open .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 30; p
   url(img/hero.jpg) center / cover no-repeat #1a1a1a; }
 .hero-inner { position: relative; max-width: 1440px; height: calc(860 * var(--u)); margin: 0 auto; }
 .hero-inner > * { position: absolute; }
-.nav-hero { left: calc(40 * var(--u)); right: calc(40 * var(--u)); top: 0; height: calc(108 * var(--u)); }
+.hero-inner > .nav-hero { position: fixed; left: 0; right: 0; top: 0; z-index: 15; height: calc(108 * var(--u)); padding: 0 calc(max(0px, (100% - 1440px) / 2) + 40 * var(--u)); color: var(--white); }
+.nav-hero .nav-cta { opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s; }
+body.scrolled .nav-hero { height: 72px; background: var(--white); color: var(--black); box-shadow: 0 1px 0 var(--line); }
+body.scrolled .nav-hero .nav-cta { opacity: 1; visibility: visible; }
 .hero-word { left: calc(48 * var(--u)); top: calc(70 * var(--u)); width: calc(1320 * var(--u)); height: calc(300 * var(--u)); margin: 0; font-family: var(--display); font-weight: 800; color: var(--red); line-height: 1; }
 /* Figma's wordmark is a touch wider than Syne's default spacing */
 .hero-port { position: absolute; left: calc(-12 * var(--u)); top: calc(68 * var(--u)); font-size: calc(266 * var(--u)); letter-spacing: .06em; }
@@ -224,7 +233,7 @@ body.menu-open .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 30; p
 .feature-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; }
 .feature-list li { padding: 16px 0; border-bottom: 1px solid var(--line); font-size: 18px; display: flex; gap: 14px; align-items: center; }
 .feature-list li::before { content: ""; width: 8px; height: 8px; background: var(--red); flex: none; }
-.book-card { position: sticky; top: 24px; border: 1px solid var(--black); padding: 32px; display: grid; gap: 24px; }
+.book-card { position: sticky; top: 96px; border: 1px solid var(--black); padding: 32px; display: grid; gap: 24px; }
 .book-card .price { font-size: 40px; font-weight: 700; }
 .book-card .price small { font-size: 16px; font-weight: 400; color: var(--grey); }
 .book-card .specs { gap: 32px; }
@@ -299,7 +308,7 @@ body.menu-open .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 30; p
 .agree { display: flex; gap: 12px; align-items: flex-start; margin-top: 24px; font-size: 15px; cursor: pointer; }
 .agree input { width: 20px; height: 20px; accent-color: var(--red); margin: 0; flex: none; }
 
-.summary { position: sticky; top: 24px; background: var(--soft); }
+.summary { position: sticky; top: 96px; background: var(--soft); }
 .summary img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
 .summary-body { padding: 24px 28px 28px; display: grid; gap: 16px; }
 .summary h3 { font-size: 22px; font-weight: 700; text-transform: uppercase; }
@@ -349,11 +358,11 @@ body.menu-open .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 30; p
   .hero { background-position: 60% center; }
   .hero-inner { height: auto; min-height: 720px; padding: 0 20px 28px; display: flex; flex-direction: column; background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,0) 30%, rgba(0,0,0,.65)); }
   .hero-inner > * { position: static; }
-  .nav-hero { height: 72px; }
+  .hero-inner > .nav-hero { height: 72px; padding: 0 20px; }
   /* same composition as desktop: PORT fills the width, °273 sits above its right edge */
   .hero-word { position: relative; width: auto; height: auto; margin-top: auto; padding-top: calc((100vw - 40px) * .085); }
   .hero-port { position: static; display: block; font-size: calc((100vw - 40px) / 4.85); letter-spacing: 0; line-height: .85; }
-  .hero-num { position: absolute; top: 0; right: 0; font-size: calc((100vw - 40px) / 15); letter-spacing: .06em; margin-right: 0; }
+  .hero-num { position: absolute; top: 0; right: 12px; font-size: calc((100vw - 40px) / 15); letter-spacing: .06em; margin-right: 0; }
   .hero-text { width: auto; font-size: 15px; margin-top: 28px; }
   .hero-stat { width: auto; display: flex; flex-direction: column-reverse; align-items: flex-start; gap: 8px; margin-top: 24px; }
   .hero-stat b { font-size: 56px; }
